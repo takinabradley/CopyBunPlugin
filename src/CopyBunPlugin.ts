@@ -1,10 +1,9 @@
 import type { BunPlugin, PluginBuilder } from 'bun'
 import { type Dirent } from 'node:fs'
-import { readdir, copyFile, constants as fsConstants, mkdir } from 'node:fs/promises'
+import { readdir, copyFile, mkdir } from 'node:fs/promises'
 
 interface CopyBunPluginConfig {
   patterns?: CopyPluginPattern[]
-  filePaths?: string[]
 }
 
 interface CopyPluginPattern {
@@ -24,7 +23,7 @@ async function copyDirToOutdir (pattern: string, outdir: string): Promise<void> 
   const dirFiles = filterFiles(dirEntries)
   dirFiles.forEach(async (entry: Dirent) => {
     try {
-      await copyFile(pattern + entry.name, outdir + entry.name, fsConstants.COPYFILE_FICLONE)
+      await copyFile(pattern + entry.name, outdir + entry.name)
     } catch (err) {
       if (isNotExpectedError(err)) console.error(`Failed to copy ${entry.name} when copying from ${pattern} to ${outdir}`, err)
     }
@@ -92,7 +91,7 @@ export default function CopyBunPlugin (pluginConfig: CopyBunPluginConfig): BunPl
 
         // attempt to copy the file to the new file
         try {
-          await copyFile(pattern.from, pattern.to || outdir + toFileName(pattern.from), fsConstants.COPYFILE_FICLONE)
+          await copyFile(pattern.from, pattern.to || outdir + toFileName(pattern.from))
         } catch (err) {
           if (isNotExpectedError(err)) console.error(`failed to copy file ${pattern.from} to ${pattern.to || outdir}`, err)
         }

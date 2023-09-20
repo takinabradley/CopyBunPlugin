@@ -1,6 +1,6 @@
 {
-  "name": "copybunplugin",
-  "module": "src/CopyBunPlugin.ts",
+  "name": "@takinabradley/copybunplugin",
+  "main": "out/CopyBunPlugin.js",
   "type": "module",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.7.2",
@@ -12,6 +12,22 @@
     "eslint-plugin-promise": "^6.1.1",
     "typescript": "^5.2.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takinabradley/CopyBunPlugin.git"
+  },
+  "keywords": [
+    "bun",
+    "bundler",
+    "plugin",
+    "copy"
+  ],
+  "author": "takinabradley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/takinabradley/CopyBunPlugin/issues"
+  },
+  "homepage": "https://github.com/takinabradley/CopyBunPlugin#readme",
   "peerDependencies": {
     "typescript": "^5.0.0"
   },

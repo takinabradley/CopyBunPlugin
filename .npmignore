@@ -1,0 +1,6 @@
+src/
+.eslintignore
+.eslintrc.cjs
+.bun.lockb
+tsconfig.json
+node_modules/

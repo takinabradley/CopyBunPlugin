@@ -1,5 +1,5 @@
 // src/CopyBunPlugin.ts
-var {readdir, copyFile, constants: fsConstants, mkdir} = (()=>({}));
+var {readdir, copyFile, mkdir} = (()=>({}));
 var isNotExpectedError = function(err) {
   if (err instanceof Error && err.message !== "File or folder exists")
     return true;
@@ -10,7 +10,7 @@ async function copyDirToOutdir(pattern, outdir) {
   const dirFiles = filterFiles(dirEntries);
   dirFiles.forEach(async (entry) => {
     try {
-      await copyFile(pattern + entry.name, outdir + entry.name, fsConstants.COPYFILE_FICLONE);
+      await copyFile(pattern + entry.name, outdir + entry.name);
     } catch (err) {
       if (isNotExpectedError(err))
         console.error(`Failed to copy ${entry.name} when copying from ${pattern} to ${outdir}`, err);
@@ -61,7 +61,7 @@ function CopyBunPlugin(pluginConfig) {
             console.error(`Directory ${toFolderName(pattern.to || outdir)} already exists!`);
         }
         try {
-          await copyFile(pattern.from, pattern.to || outdir + toFileName(pattern.from), fsConstants.COPYFILE_FICLONE);
+          await copyFile(pattern.from, pattern.to || outdir + toFileName(pattern.from));
         } catch (err) {
           if (isNotExpectedError(err))
             console.error(`failed to copy file ${pattern.from} to ${pattern.to || outdir}`, err);

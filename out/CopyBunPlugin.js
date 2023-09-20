@@ -1,5 +1,6 @@
+// @bun
 // src/CopyBunPlugin.ts
-var {readdir, copyFile, mkdir} = (()=>({}));
+import {readdir, copyFile, mkdir} from "fs/promises";
 var isNotExpectedError = function(err) {
   if (err instanceof Error && err.message !== "File or folder exists")
     return true;

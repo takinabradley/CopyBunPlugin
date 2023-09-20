@@ -2,7 +2,7 @@
   "name": "@takinabradley/copybunplugin",
   "main": "out/CopyBunPlugin.js",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "bun-types": "latest",
@@ -33,6 +33,6 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "build": "bun build src/CopyBunPlugin.ts --outdir=out/"
+    "build": "bun build src/CopyBunPlugin.ts --outdir=out/ --target=bun"
   }
 }

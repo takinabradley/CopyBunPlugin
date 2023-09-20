@@ -25,7 +25,7 @@ async function copyDirToOutdir (pattern: string, outdir: string): Promise<void> 
     try {
       await copyFile(pattern + entry.name, outdir + entry.name)
     } catch (err) {
-      if (isNotExpectedError(err)) console.error(`Failed to copy ${entry.name} when copying from ${pattern} to ${outdir}`, err)
+      if (isNotExpectedError(err)) console.error(`Failed to copy ${entry.name} when copying from directory ${pattern} to ${outdir}`, err)
     }
   })
 }
@@ -66,14 +66,14 @@ export default function CopyBunPlugin (pluginConfig: CopyBunPluginConfig): BunPl
             // console.log(`Attempting to create directory ${pattern.to || outdir}...`)
             await mkdir(pattern.to || outdir, { recursive: true })
           } catch (err) {
-            if (isNotExpectedError(err)) console.error(`Directory ${pattern.to || outdir} already exists!`)
+            if (isNotExpectedError(err)) console.error(`Failed to create directory ${pattern.to || outdir} when trying to copy from ${pattern.from}`, err)
           }
 
           // attempt to copy the 'from' directory to it
           try {
             await copyDirToOutdir(pattern.from, pattern.to || outdir)
           } catch (err) {
-            if (isNotExpectedError(err)) console.error(`Attempted to read dir ${pattern.from}, and failed.`, err)
+            if (isNotExpectedError(err)) console.error(`Attempted to read dir ${pattern.from} when copying to ${pattern.to || outdir}, and failed.`, err)
           }
 
           return
@@ -86,14 +86,14 @@ export default function CopyBunPlugin (pluginConfig: CopyBunPluginConfig): BunPl
           // console.log(`Attempting to create directory ${pattern.to || outdir}...`)
           await mkdir(toFolderName(pattern.to || outdir), { recursive: true })
         } catch (err) {
-          if (isNotExpectedError(err)) console.error(`Directory ${toFolderName(pattern.to || outdir)} already exists!`)
+          if (isNotExpectedError(err)) console.error(`Failed to create directory ${toFolderName(pattern.to || outdir)} when trying to copy file ${pattern.from} to ${toFolderName(pattern.to || outdir)}`, err)
         }
 
         // attempt to copy the file to the new file
         try {
           await copyFile(pattern.from, pattern.to || outdir + toFileName(pattern.from))
         } catch (err) {
-          if (isNotExpectedError(err)) console.error(`failed to copy file ${pattern.from} to ${pattern.to || outdir}`, err)
+          if (isNotExpectedError(err)) console.error(`failed to copy file ${pattern.from} to ${pattern.to || outdir + toFileName(pattern.from)}`, err)
         }
       })
     }

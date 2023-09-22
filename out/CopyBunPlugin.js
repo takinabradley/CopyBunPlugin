@@ -44,8 +44,10 @@ function CopyBunPlugin(pluginConfig) {
           try {
             await mkdir(pattern.to || outdir, { recursive: true });
           } catch (err) {
-            if (isNotExpectedError(err))
+            if (isNotExpectedError(err)) {
               console.error(`Failed to create directory ${pattern.to || outdir} when trying to copy from ${pattern.from}`, err);
+              return;
+            }
           }
           try {
             await copyDirToOutdir(pattern.from, pattern.to || outdir);
@@ -58,8 +60,10 @@ function CopyBunPlugin(pluginConfig) {
         try {
           await mkdir(toFolderName(pattern.to || outdir), { recursive: true });
         } catch (err) {
-          if (isNotExpectedError(err))
+          if (isNotExpectedError(err)) {
             console.error(`Failed to create directory ${toFolderName(pattern.to || outdir)} when trying to copy file ${pattern.from} to ${toFolderName(pattern.to || outdir)}`, err);
+            return;
+          }
         }
         try {
           await copyFile(pattern.from, pattern.to || outdir + toFileName(pattern.from));

@@ -38,7 +38,7 @@ function toFileName (path: string): string {
   return lastSlash !== -1 ? path.slice(lastSlash + 1) : path
 }
 
-function toFolderName (path: string): string {
+function toFolderPath (path: string): string {
   const lastSlash = path.lastIndexOf('/')
   return lastSlash !== -1 ? path.slice(0, lastSlash + 1) : path + '/'
 }
@@ -88,10 +88,10 @@ export default function CopyBunPlugin (pluginConfig: CopyBunPluginConfig): BunPl
 
         // Attempt to create the parent directory for the new file
         try {
-          await mkdir(toFolderName(pattern.to || outdir), { recursive: true })
+          await mkdir(toFolderPath(pattern.to || outdir), { recursive: true })
         } catch (err) {
           if (isNotExpectedError(err)) {
-            console.error(`Failed to create directory ${toFolderName(pattern.to || outdir)} when trying to copy file ${pattern.from} to ${toFolderName(pattern.to || outdir)}`, err)
+            console.error(`Failed to create directory ${toFolderPath(pattern.to || outdir)} when trying to copy file ${pattern.from} to ${toFolderPath(pattern.to || outdir)}`, err)
             return
           }
         }

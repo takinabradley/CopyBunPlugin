@@ -68,7 +68,10 @@ export default function CopyBunPlugin (pluginConfig: CopyBunPluginConfig): BunPl
           try {
             await mkdir(pattern.to || outdir, { recursive: true })
           } catch (err) {
-            if (isNotExpectedError(err)) console.error(`Failed to create directory ${pattern.to || outdir} when trying to copy from ${pattern.from}`, err)
+            if (isNotExpectedError(err)) {
+              console.error(`Failed to create directory ${pattern.to || outdir} when trying to copy from ${pattern.from}`, err)
+              return
+            }
           }
 
           // attempt to copy the 'from' directory to it
@@ -87,7 +90,10 @@ export default function CopyBunPlugin (pluginConfig: CopyBunPluginConfig): BunPl
         try {
           await mkdir(toFolderName(pattern.to || outdir), { recursive: true })
         } catch (err) {
-          if (isNotExpectedError(err)) console.error(`Failed to create directory ${toFolderName(pattern.to || outdir)} when trying to copy file ${pattern.from} to ${toFolderName(pattern.to || outdir)}`, err)
+          if (isNotExpectedError(err)) {
+            console.error(`Failed to create directory ${toFolderName(pattern.to || outdir)} when trying to copy file ${pattern.from} to ${toFolderName(pattern.to || outdir)}`, err)
+            return
+          }
         }
 
         // attempt to copy the file to the new file

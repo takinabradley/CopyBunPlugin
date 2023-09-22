@@ -14,7 +14,7 @@ async function copyDirToOutdir(pattern, outdir) {
       await copyFile(pattern + entry.name, outdir + entry.name);
     } catch (err) {
       if (isNotExpectedError(err))
-        console.error(`Failed to copy ${entry.name} when copying from ${pattern} to ${outdir}`, err);
+        console.error(`Failed to copy ${entry.name} when copying from directory ${pattern} to ${outdir}`, err);
     }
   });
 }
@@ -45,13 +45,13 @@ function CopyBunPlugin(pluginConfig) {
             await mkdir(pattern.to || outdir, { recursive: true });
           } catch (err) {
             if (isNotExpectedError(err))
-              console.error(`Directory ${pattern.to || outdir} already exists!`);
+              console.error(`Failed to create directory ${pattern.to || outdir} when trying to copy from ${pattern.from}`, err);
           }
           try {
             await copyDirToOutdir(pattern.from, pattern.to || outdir);
           } catch (err) {
             if (isNotExpectedError(err))
-              console.error(`Attempted to read dir ${pattern.from}, and failed.`, err);
+              console.error(`Attempted to read dir ${pattern.from} when copying to ${pattern.to || outdir}, and failed.`, err);
           }
           return;
         }
@@ -59,13 +59,13 @@ function CopyBunPlugin(pluginConfig) {
           await mkdir(toFolderName(pattern.to || outdir), { recursive: true });
         } catch (err) {
           if (isNotExpectedError(err))
-            console.error(`Directory ${toFolderName(pattern.to || outdir)} already exists!`);
+            console.error(`Failed to create directory ${toFolderName(pattern.to || outdir)} when trying to copy file ${pattern.from} to ${toFolderName(pattern.to || outdir)}`, err);
         }
         try {
           await copyFile(pattern.from, pattern.to || outdir + toFileName(pattern.from));
         } catch (err) {
           if (isNotExpectedError(err))
-            console.error(`failed to copy file ${pattern.from} to ${pattern.to || outdir}`, err);
+            console.error(`failed to copy file ${pattern.from} to ${pattern.to || outdir + toFileName(pattern.from)}`, err);
         }
       });
     }

@@ -30,13 +30,13 @@ Bun.build({
       {
         // files must not end with '/'
         // files can only have a file path for 'to'
-        from: 'path/to/source/file',
-        to: 'path/to/out/file'
+        from: 'path/to/source/file.png',
+        to: 'path/to/out/file.png'
       },
 
       // 'to' can be ommited for files and directories.
       {
-        // files are copied out outdir using their original file name
+        // files are copied to outdir using their original file name
         from: 'path/to/source/file.tsx' // copied to ./out/file.tsx
       },
       {

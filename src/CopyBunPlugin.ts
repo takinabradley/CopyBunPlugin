@@ -2,6 +2,9 @@ import type { BunPlugin, PluginBuilder } from 'bun'
 import { type Dirent } from 'node:fs'
 import { readdir, copyFile, mkdir } from 'node:fs/promises'
 
+// TODO: Add mode fs.constants.COPYFILE_FICLONE to copyFile calls in Bun 1.0.3.
+// Currently broken.
+
 interface CopyBunPluginConfig {
   patterns?: CopyPluginPattern[]
 }
@@ -63,7 +66,6 @@ export default function CopyBunPlugin (pluginConfig: CopyBunPluginConfig): BunPl
         if (pattern.from.endsWith('/')) {
           // attempt to make the 'to' directory:
           try {
-            // console.log(`Attempting to create directory ${pattern.to || outdir}...`)
             await mkdir(pattern.to || outdir, { recursive: true })
           } catch (err) {
             if (isNotExpectedError(err)) console.error(`Failed to create directory ${pattern.to || outdir} when trying to copy from ${pattern.from}`, err)
@@ -83,7 +85,6 @@ export default function CopyBunPlugin (pluginConfig: CopyBunPluginConfig): BunPl
 
         // Attempt to create the parent directory for the new file
         try {
-          // console.log(`Attempting to create directory ${pattern.to || outdir}...`)
           await mkdir(toFolderName(pattern.to || outdir), { recursive: true })
         } catch (err) {
           if (isNotExpectedError(err)) console.error(`Failed to create directory ${toFolderName(pattern.to || outdir)} when trying to copy file ${pattern.from} to ${toFolderName(pattern.to || outdir)}`, err)

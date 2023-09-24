@@ -1,6 +1,6 @@
 {
   "name": "@takinabradley/copybunplugin",
-  "main": "out/CopyBunPlugin.js",
+  "module": "out/CopyBunPlugin.js",
   "types": "out/CopyBunPlugin.d.ts",
   "type": "module",
   "version": "0.0.6",
